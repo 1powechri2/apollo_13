@@ -25,5 +25,16 @@ describe "user sees all astronauts" do
 
       expect(page).to have_content("Average Age: #{avg_age}")
     end
+    it "displays a list of missions for each astronaut in alphabetical order" do
+      astronaut = Astronaut.create(name: "eqreqeq", age: 5, job: "BBBBB")
+
+      mission_one   = astronaut.space_mission.create(title: 'a', trip_length: 1)
+      mission_two   = astronaut.space_mission.create(title: 'b', trip_length: 2)
+      mission_three = astronaut.space_mission.create(title: 'c', trip_length: 5)
+
+      visit '/astronauts'
+
+      expect(page).to have_content([mission_one.title, mission_two.title, mission_three.title])
+    end
   end
 end
